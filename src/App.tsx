@@ -15,6 +15,7 @@ import { AdminItemsManager } from './pages/admin/AdminItemsManager';
 import { AdminServicesManager } from './pages/admin/AdminServicesManager';
 import { AdminProofsManager } from './pages/admin/AdminProofsManager';
 import { AdminStraightSubManager } from './pages/admin/AdminStraightSubManager';
+import { AdminSalesTracker } from './pages/admin/AdminSalesTracker';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                 <Route path="services" element={<AdminServicesManager />} />
                 <Route path="proofs" element={<AdminProofsManager />} />
                 <Route path="pricing-tiers" element={<AdminStraightSubManager />} />
+                <Route path="sales-tracker" element={<AdminSalesTracker />} />
               </Route>
             </Routes>
           </main>

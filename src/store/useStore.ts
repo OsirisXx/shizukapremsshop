@@ -47,6 +47,7 @@ interface Service {
   description: string;
   category_id: number;
   category: string | null;
+  image_url?: string | null;
 }
 
 interface StoreState {

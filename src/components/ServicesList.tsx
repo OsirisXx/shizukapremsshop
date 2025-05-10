@@ -1,11 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle } from 'lucide-react';
+import { Card, CardContent, CardHeader } from '../components/ui/Card';
 
 interface Service {
   id: number;
   name: string;
   description: string;
+  image_url?: string | null;
 }
 
 interface ServicesListProps {
@@ -50,24 +51,33 @@ export const ServicesList: React.FC<ServicesListProps> = ({ services, isLoading 
       <h3 className="text-2xl font-semibold text-gray-800 mb-6">Services Offered</h3>
       
       <motion.div 
-        className="space-y-4"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         variants={container}
         initial="hidden"
         animate="show"
       >
         {services.map((service) => (
-          <motion.div
-            key={service.id}
-            variants={item}
-            className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow"
-          >
-            <div className="flex items-start">
-              <CheckCircle className="h-6 w-6 text-success-500 flex-shrink-0 mt-1" />
-              <div className="ml-4">
-                <h4 className="text-lg font-medium text-gray-900 mb-1">{service.name}</h4>
-                <p className="text-gray-600">{service.description}</p>
-              </div>
-            </div>
+          <motion.div key={service.id} variants={item}>
+            <Card 
+              className="h-full flex flex-col overflow-hidden rounded-lg shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 group"
+            >
+              {service.image_url && (
+                <div className="w-full h-48 overflow-hidden relative">
+                  <img 
+                    src={service.image_url} 
+                    alt={service.name} 
+                    className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                </div>
+              )}
+              <CardHeader className={`pt-4 px-4 ${service.image_url ? '' : 'pt-4'}`}>
+                <h4 className="text-lg font-semibold text-gray-900 line-clamp-2">{service.name}</h4>
+              </CardHeader>
+              <CardContent className="flex-grow px-4 pb-4 pt-2">
+                <p className="text-sm text-gray-600 line-clamp-3">{service.description}</p>
+              </CardContent>
+            </Card>
           </motion.div>
         ))}
       </motion.div>

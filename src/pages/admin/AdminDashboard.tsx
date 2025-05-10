@@ -8,7 +8,7 @@ import { AdminItemsManager } from './AdminItemsManager';
 import { AdminServicesManager } from './AdminServicesManager';
 import { AdminImagesManager } from './AdminImagesManager';
 import { AdminProofsManager } from './AdminProofsManager';
-import { LayoutDashboard, Boxes, Image, Settings, MessageSquare, Users, Tag, Server } from 'lucide-react';
+import { LayoutDashboard, Boxes, Image, Settings, MessageSquare, Users, Tag, Server, DollarSign } from 'lucide-react';
 
 const adminNavItems = [
   { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
@@ -17,6 +17,7 @@ const adminNavItems = [
   { name: 'Services', path: '/admin/services', icon: Server },
   { name: 'Proofs', path: '/admin/proofs', icon: Image },
   { name: 'Pricing Tiers', path: '/admin/pricing-tiers', icon: Boxes },
+  { name: 'Sales Tracker', path: '/admin/sales-tracker', icon: DollarSign },
 ];
 
 export const AdminDashboard: React.FC = () => {

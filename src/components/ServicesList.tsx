@@ -12,9 +12,10 @@ interface Service {
 interface ServicesListProps {
   services: Service[];
   isLoading: boolean;
+  onServiceItemClick?: () => void;
 }
 
-export const ServicesList: React.FC<ServicesListProps> = ({ services, isLoading }) => {
+export const ServicesList: React.FC<ServicesListProps> = ({ services, isLoading, onServiceItemClick }) => {
   if (isLoading) {
     return (
       <div className="flex justify-center py-12">
@@ -48,10 +49,10 @@ export const ServicesList: React.FC<ServicesListProps> = ({ services, isLoading 
 
   return (
     <div>
-      <h3 className="text-2xl font-semibold text-gray-800 mb-6">Services Offered</h3>
+      <h3 className="text-2xl font-semibold text-blue-900 mb-6">Services Offered</h3>
       
       <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
         variants={container}
         initial="hidden"
         animate="show"
@@ -60,9 +61,11 @@ export const ServicesList: React.FC<ServicesListProps> = ({ services, isLoading 
           <motion.div key={service.id} variants={item}>
             <Card 
               className="h-full flex flex-col overflow-hidden rounded-lg shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 group"
+              onClick={onServiceItemClick}
+              interactive={true}
             >
               {service.image_url && (
-                <div className="w-full h-48 overflow-hidden relative">
+                <div className="w-full h-56 overflow-hidden relative">
                   <img 
                     src={service.image_url} 
                     alt={service.name} 

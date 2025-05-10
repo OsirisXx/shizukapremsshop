@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, User, Menu, X, LogOut, Settings } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -9,6 +9,7 @@ export const Navbar: React.FC = () => {
   const { user, signOut, isAdmin } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -19,6 +20,14 @@ export const Navbar: React.FC = () => {
     navigate('/');
     setIsMenuOpen(false);
   };
+
+  // Determine brand name based on path
+  const brandName = 
+    location.pathname === '/' 
+      ? "Shizuka Prems & Raijin Programming Commissions" 
+      : location.pathname === '/programming' 
+        ? "Raijin Commissions" 
+        : "Shizuka Prems";
 
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-md border-b border-gray-100 bg-white/80">
@@ -31,7 +40,7 @@ export const Navbar: React.FC = () => {
             >
               <ShoppingBag className="w-8 h-8 text-peach-500" />
             </motion.div>
-            <span className="text-xl font-bold text-gray-900">Shizuka Prems</span>
+            <span className="text-xl font-bold text-gray-900">{brandName}</span>
           </Link>
 
           {/* Desktop Navigation */}

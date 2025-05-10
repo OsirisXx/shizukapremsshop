@@ -10,20 +10,29 @@ interface GalleryProps {
   title: string;
   emptyMessage: string;
   isLoading: boolean;
+  onImageItemClick?: () => void;
 }
 
 export const Gallery: React.FC<GalleryProps> = ({ 
   images, 
   title,
   emptyMessage,
-  isLoading 
+  isLoading, 
+  onImageItemClick
 }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const handleImageClick = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+    if (onImageItemClick) {
+      onImageItemClick();
+    }
+  };
 
   if (isLoading) {
     return (
       <div className="flex justify-center py-12">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-peach-500"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-600"></div>
       </div>
     );
   }
@@ -38,21 +47,21 @@ export const Gallery: React.FC<GalleryProps> = ({
 
   return (
     <div>
-      <h3 className="text-2xl font-semibold text-gray-800 mb-6">{title}</h3>
+      <h3 className="text-2xl font-semibold text-blue-900 mb-6">{title}</h3>
       
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {images.map((image) => (
           <motion.div
             key={image.id}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="overflow-hidden rounded-lg shadow-sm cursor-pointer aspect-square"
-            onClick={() => setSelectedImage(image.url)}
+            className="h-48 overflow-hidden rounded-lg shadow-sm cursor-pointer bg-gray-100 group"
+            onClick={() => handleImageClick(image.url)}
           >
             <img
               src={image.url}
               alt={`Gallery image ${image.id}`}
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             />
           </motion.div>
         ))}
@@ -75,7 +84,7 @@ export const Gallery: React.FC<GalleryProps> = ({
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md z-10"
+                className="absolute top-4 right-4 bg-white text-blue-700 hover:bg-gray-100 rounded-full p-2 shadow-md z-10 transition-colors"
                 onClick={() => setSelectedImage(null)}
               >
                 <X className="h-6 w-6" />

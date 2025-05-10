@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import { Gallery } from '../components/Gallery';
 import { ServicesList } from '../components/ServicesList';
 import { Code, Briefcase, BookCheck } from 'lucide-react';
+import { ContactModal } from '../components/ContactModal';
 
 export const ProgrammingServices: React.FC = () => {
   const { 
@@ -22,6 +23,7 @@ export const ProgrammingServices: React.FC = () => {
   
   const [programmingCategory, setProgrammingCategory] = useState<any | null>(null);
   const [activeTab, setActiveTab] = useState<string>('services');
+  const [isContactModalOpen, setIsContactModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (categories.length === 0) {
@@ -56,82 +58,101 @@ export const ProgrammingServices: React.FC = () => {
 
   if (!programmingCategory && categories.length > 0 && !isLoading) {
     return (
-      <div className="container mx-auto px-4 py-12 text-center text-red-600">
+      <div className="container mx-auto px-4 py-12 text-center text-red-600 bg-white">
         Error: 'programming-services' category not found.
       </div>
     );
   }
 
+  const handleCardClick = (tabName: string) => {
+    console.log('Card clicked:, tabName');
+    setActiveTab(tabName);
+  };
+
+  const openContactModal = () => {
+    setIsContactModalOpen(true);
+  };
+
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 py-12 bg-slate-50 min-h-screen">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            {programmingCategory ? programmingCategory.name : 'Loading Services...'}
+          <h1 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+            {programmingCategory 
+              ? (programmingCategory.name === 'Programming Services' 
+                  ? "Raijin's Programming Services" 
+                  : programmingCategory.name)
+              : 'Loading Services...'}
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-slate-600 max-w-2xl mx-auto">
             {programmingCategory ? programmingCategory.description : 'Loading description...'}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <Card 
-            className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${activeTab === 'services' ? 'ring-2 ring-peach-500 shadow-lg' : 'border border-gray-100'}`}
-            onClick={() => setActiveTab('services')}
+            className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white 
+                        ${activeTab === 'services' ? 'ring-2 ring-blue-600 shadow-xl border-blue-300' : 'border border-slate-200 hover:border-blue-300'}`}
+            onClick={() => handleCardClick('services')}
             bordered
+            interactive={true}
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b-0">
-              <h3 className="text-lg font-semibold">Services Offered</h3>
-              <Code className={`h-6 w-6 ${activeTab === 'services' ? 'text-peach-500' : 'text-gray-400'}`} />
+              <h3 className="text-lg font-semibold text-blue-800">Services Offered</h3>
+              <Code className={`h-6 w-6 ${activeTab === 'services' ? 'text-blue-600' : 'text-slate-400'}`} />
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-slate-500">
                 View the programming services I provide.
               </p>
             </CardContent>
           </Card>
           
           <Card 
-            className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${activeTab === 'proofs' ? 'ring-2 ring-peach-500 shadow-lg' : 'border border-gray-100'}`}
-            onClick={() => setActiveTab('proofs')}
+            className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white 
+                        ${activeTab === 'proofs' ? 'ring-2 ring-blue-600 shadow-xl border-blue-300' : 'border border-slate-200 hover:border-blue-300'}`}
+            onClick={() => handleCardClick('proofs')}
             bordered
+            interactive={true}
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b-0">
-              <h3 className="text-lg font-semibold">Proofs of Work</h3>
-              <BookCheck className={`h-6 w-6 ${activeTab === 'proofs' ? 'text-peach-500' : 'text-gray-400'}`} />
+              <h3 className="text-lg font-semibold text-blue-800">Proofs of Work</h3>
+              <BookCheck className={`h-6 w-6 ${activeTab === 'proofs' ? 'text-blue-600' : 'text-slate-400'}`} />
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-slate-500">
                 See examples and evidence of completed tasks.
               </p>
             </CardContent>
           </Card>
           
           <Card 
-            className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${activeTab === 'projects' ? 'ring-2 ring-peach-500 shadow-lg' : 'border border-gray-100'}`}
-            onClick={() => setActiveTab('projects')}
+            className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white 
+                        ${activeTab === 'projects' ? 'ring-2 ring-blue-600 shadow-xl border-blue-300' : 'border border-slate-200 hover:border-blue-300'}`}
+            onClick={() => handleCardClick('projects')}
             bordered
+            interactive={true}
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b-0">
-              <h3 className="text-lg font-semibold">Projects</h3>
-              <Briefcase className={`h-6 w-6 ${activeTab === 'projects' ? 'text-peach-500' : 'text-gray-400'}`} />
+              <h3 className="text-lg font-semibold text-blue-800">Projects</h3>
+              <Briefcase className={`h-6 w-6 ${activeTab === 'projects' ? 'text-blue-600' : 'text-slate-400'}`} />
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-slate-500">
                 Explore larger projects I have worked on.
               </p>
             </CardContent>
           </Card>
         </div>
         
-        <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 min-h-[300px]">
+        <div className="bg-white rounded-lg shadow-lg border border-blue-700 p-6 min-h-[300px]">
           {isContentLoading ? (
             <div className="flex justify-center items-center h-full min-h-[250px]">
-              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-peach-500"></div>
+              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-600"></div>
             </div>
           ) : (
             <AnimatePresence mode="wait">
@@ -143,7 +164,11 @@ export const ProgrammingServices: React.FC = () => {
                 transition={{ duration: 0.3 }}
               >
                 {activeTab === 'services' && (
-                  <ServicesList services={currentServices} isLoading={isContentLoading} />
+                  <ServicesList 
+                    services={currentServices} 
+                    isLoading={isContentLoading} 
+                    onServiceItemClick={openContactModal}
+                  />
                 )}
 
                 {(activeTab === 'proofs' || activeTab === 'projects') && (
@@ -152,6 +177,7 @@ export const ProgrammingServices: React.FC = () => {
                     title={activeTab === 'proofs' ? "Proofs of Work" : "Projects"} 
                     emptyMessage={`No ${activeTab} available for this category yet.`}
                     isLoading={isContentLoading} 
+                    onImageItemClick={openContactModal}
                   />
                 )}
               </motion.div>
@@ -159,6 +185,10 @@ export const ProgrammingServices: React.FC = () => {
           )}
         </div>
       </motion.div>
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </div>
   );
 };
